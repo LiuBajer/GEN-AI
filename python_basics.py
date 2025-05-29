@@ -3,7 +3,7 @@ def bool_to_yes_no(value: bool) -> str:
 
 salutation = "Hey Heyyyyyyyyyyiiiii!!!"
 age = 15
-height = 182
+height = 186
 is_old_enough_to_vote = age >= 18
 is_married = True
 
@@ -12,5 +12,10 @@ print(f"{salutation} My age is {age} years and height {height} centimeters")
 print(f"am i old enough to vote? {bool_to_yes_no(is_old_enough_to_vote)}")
 print(f"Bin ich verheiratet? {bool_to_yes_no(is_married)}")
 
+
+if not is_old_enough_to_vote:
+    print("Limonado")
+else:
+    print("Kefyro")
 
 
