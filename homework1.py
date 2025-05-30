@@ -58,8 +58,8 @@ while True:
     user_input = input("Enter the day of Your birth: ")
     try:
         day = int(user_input)
-        if is_valid_date(year, month, day):
-            raise ValueError("Pls try again, months has to be some value between 1 and 12")
+        if not is_valid_date(year, month, day):
+            raise ValueError("The entered day is not valid for specified year and month")
         if (not check_not_future(year, month, 1)):
             raise DateInputError("Provided day is in future")
         break
@@ -73,7 +73,7 @@ age_categories = [
 ]
 
 age = calc_age(year, month, day)
-def get_category():
+def get_category(age):
     for min_age, max_age, cat in age_categories:
         if min_age <= age <= max_age:
             return cat
