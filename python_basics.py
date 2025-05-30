@@ -1,11 +1,11 @@
 def bool_to_yes_no(value: bool) -> str:
     return "Yes" if value else "No"
-
+voting_age = 18
 salutation = "Hey Heyyyyyyyyyyiiiii!!!"
 ageText = input("Write Your age pls: ")
 age = int(ageText)
 height = 186
-is_old_enough_to_vote = age >= 18
+is_old_enough_to_vote = age >= voting_age
 is_married = True
 
 # sekancioje ejluteje programa turetu isspausdinti pasisveikinima.
