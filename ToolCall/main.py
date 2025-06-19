@@ -7,6 +7,7 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 from rich import print
+import json
 
 sum_function_definition = {
     "name": "sum",
@@ -56,7 +57,8 @@ print(tool_calls)
 # checks if any tools were called:
 if len(tool_calls) != 0:
     tool_call = tool_calls[0]
-    result = execute(tool_call)
+    args = json.loads(tool_call.function.arguments)
+    result = execute(tool_call.function.name, **args)
     print(f"[green]{result}[/green]")
 
 if result != None:
