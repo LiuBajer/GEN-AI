@@ -35,5 +35,19 @@ def get_weather(city:str):
 #dataAsText = json.dumps(data) # serialization
 
 data = get_weather("Kaunas")
-print(data)
+#print(data)
 #print(data["current"]["temp_c"])
+
+get_weather_definition = {
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "Gets weather",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "city": {"type": "string", "description": "City for weather"}
+            }
+        }
+    }
+}
