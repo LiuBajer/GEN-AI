@@ -24,7 +24,8 @@ def get_clothing_advice(prompt):
                 {"role": "system", "content": """You are an expert of how to dress on different weather
                   for all people and all ages. You must answer only how the provided additional people (children)
                  and the parent of the children should be dressing for the provided houry weather forecast data.
-                 Your clothing advice must be insightful and helpful for all the related people provided."""},
+                 Your clothing advice must be insightful and helpful for all the related people provided.
+                 Answer as concise as possible, providing only necessary weather and cloting details"""},
                 {"role": "user", "content": prompt}
             ]
         )
