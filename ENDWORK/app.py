@@ -3,6 +3,9 @@ from datetime import time
 from streamlit_folium import st_folium
 import folium
 from datetime import datetime
+import pytz
+from llm import get_clothing_advice
+from weather import get_weather
 
 st.set_page_config(page_title="Clothing Advisor", layout="centered")
 
@@ -25,7 +28,8 @@ else:
 st.subheader("📍 Select Your Location")
 
 # Kaunas, Lithuania coordinates
-KAUNAS_LOCATION = [54.8985, 23.9036]
+lat, lon = 54.8985, 23.9036
+KAUNAS_LOCATION = [lat, lon]
 
 # Create the folium map
 map_object = folium.Map(location=KAUNAS_LOCATION, zoom_start=13)
@@ -59,7 +63,6 @@ st.markdown(
 )
 
 # Read map coordinates
-lat, lon = None, None
 if map_result and map_result.get("last_marker_drag"):
     lat = map_result["last_marker_drag"]["lat"]
     lon = map_result["last_marker_drag"]["lng"]
@@ -161,3 +164,36 @@ if st.button("✅ Subscribe"):
         # Call your db.add_user(...) function here
     else:
         st.error("❌ Please complete all required fields including map location.")
+
+# ---------------------------
+# 6. Try it now
+# ---------------------------
+st.markdown("## 🚀 Try It Now Without Subscribing")
+
+if st.button("🧪 Get Clothing Recommendation Now"):
+    if lat is None or lon is None:
+        st.error("Please select a location on the map first.")
+    else:
+        st.info("Fetching weather and generating clothing recommendation...")
+
+        # Fetch weather
+        weather = get_weather(lat, lon)
+
+        # Prepare simple prompt
+        prompt = f"""
+        Weather: {weather}
+        User gender: {gender}
+        Children: {[
+            {'name': c['name'], 'gender': c['gender'], 'birthdate': c['birthdate'].strftime('%Y-%m')}
+            for c in st.session_state.children
+        ]}
+        Notes: {notes}
+        Please recommend clothing for going outdoors now.
+        """
+
+        # Run prompt through your LLM
+        recommendation = get_clothing_advice(prompt)
+
+        # Display result
+        st.success("👕 Clothing Recommendation:")
+        st.markdown(f"**{recommendation}**")
